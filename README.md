@@ -5,6 +5,8 @@
 
 VyControl is web frontend interface to manage a single or multiple VyoS servers. It is developed in Python/Django using VyOS API.
 
+This fork specifies ALLOWED_HOSTS with environment variable.
+
 # Future Roadmap
 VyControl currently is deprecated since VyOS will bring a new API.
 
@@ -42,12 +44,24 @@ download latest docker image:
 docker pull robertoberto/vycontrol
 ```
 
-run docker:
+run docker w/o ALLOWED_HOSTS env:
 ```
 docker run -p 8000:8000 -t robertoberto/vycontrol
 ```
 
-now you can access http://127.0.0.1:8000
+you can access only http://127.0.0.1:8000
+
+run docke w/ ALLOWED_HOSTS env:
+
+```
+docker run -p 8000:8000 -e "ALLOWED_HOSTS=localhost, 192.0.2.1" -t advanceboy/vycontrol-host
+```
+or
+```
+docker run -p 8000:8000 -e "ALLOWED_HOSTS=*" -t advanceboy/vycontrol-host
+```
+
+now you can access http://loalhost:8000
 
 
 ## by docker compose
@@ -73,7 +87,7 @@ pip3 install -r requirements.txt
 cp -a vycontrol/vycontrol/settings_example/ /vycontrol/vycontrol/settings_available/
 ```
 edit according your needs:
-* ALLOWED_HOSTS currently 127.0.0.1 is ok for tests
+* ALLOWED_HOSTS configured from environment variable / default is `127.0.0.1` for tests
 * for tests you don't need to edit EMAIL settings, but forget password will not work
 * sqlite is ok for tests, but you can change to MySQL/PostgreSQL. 
 * SECRET_KEY edit to anything random, you can use openssl for example:
