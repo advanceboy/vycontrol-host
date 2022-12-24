@@ -3,7 +3,7 @@ import os
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', ]
+ALLOWED_HOSTS = [w.strip() for w in (os.getenv('ALLOWED_HOSTS') or '').split(',') if w] or ['127.0.0.1']
 
 CACHES = {
 #    'default': {
