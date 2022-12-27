@@ -8,10 +8,11 @@ COPY vycontrol/ /code/
 COPY vycontrol/vycontrol/settings_example/ /code/vycontrol/settings_available/
 
 WORKDIR /code
-RUN python3 manage.py makemigrations config --settings=vycontrol.settings_available.production 
-RUN python3 manage.py makemigrations --settings=vycontrol.settings_available.production 
-RUN python3 manage.py migrate --settings=vycontrol.settings_available.production 
-RUN python3 manage.py createcachetable --settings=vycontrol.settings_available.production 
+RUN \
+    python3 manage.py makemigrations config --settings=vycontrol.settings_available.production && \
+    python3 manage.py makemigrations --settings=vycontrol.settings_available.production && \
+    python3 manage.py migrate --settings=vycontrol.settings_available.production && \
+    python3 manage.py createcachetable --settings=vycontrol.settings_available.production 
 
 EXPOSE 8000
 STOPSIGNAL SIGINT
