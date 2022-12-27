@@ -134,7 +134,7 @@ def conntry(hostname):
 
 def get_firewall_all(hostname):
     cmd = {"op": "showConfig", "path": ["firewall"]}
-    firewall_list = api_get(hostname, cmd)
+    firewall_list = api_get(hostname, cmd) or []
 
     nfirewall_list = {}
 
@@ -150,7 +150,7 @@ def get_firewall_all(hostname):
 def get_interfaces(hostname):
     cmd = {"op": "showConfig", "path": ["interfaces"]}
 
-    result1 = api_get(hostname, cmd)
+    result1 = api_get(hostname, cmd) or []
     return result1
 
 def detail_interface(interface_type, interface_name):
@@ -401,7 +401,7 @@ def ip_route(hostname):
 
 
 def get_interface_children(hostname, interface_name):
-    interfaces_all_names = get_interfaces_all_names(hostname)
+    interfaces_all_names = get_interfaces_all_names(hostname) or []
 
     interface_children = []
 
